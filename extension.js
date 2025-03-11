@@ -1,4 +1,4 @@
-// This extensions shows USD to TRY convertion on Gnome panel.
+// This extensions shows USD to ILS convertion on Gnome panel.
 //Copyright (C) 2023  arfiesat
 // See LICENSE file
 
@@ -28,7 +28,7 @@ async function handle_request_dollar_api() {
 
         // Create body of Soup request
         let message = Soup.Message.new_from_encoded_form(
-            "GET", "https://economia.awesomeapi.com.br/last/USD-TRY", Soup.form_encode_hash({}));
+            "GET", "https://economia.awesomeapi.com.br/last/USD-ILS", Soup.form_encode_hash({}));
 
         // Send Soup request to API Server
         await session.send_and_read_async(message, GLib.PRIORITY_DEFAULT, null, (_, r0) => {
@@ -37,14 +37,15 @@ async function handle_request_dollar_api() {
             const body_response = JSON.parse(response);
 
             // Get the value of Dollar Quotation
-            dollarQuotation = body_response["USDTRY"]["bid"];
+            dollarQuotation = body_response["USDILS"]["bid"];
             dollarQuotation = dollarQuotation.split(".");
             dollarQuotation = dollarQuotation[0] + "," + dollarQuotation[1].substring(0, 2);
+            dollarQuotation = dollarQuotation.replace(",", ".");
 
             // Sext text in Widget
             panelButtonText = new St.Label({
             style_class : "cPanelText",
-                text: "(1 USD = " + dollarQuotation + " TRY)",
+                text: "(1 USD = " + dollarQuotation + " ILS)",
                 y_align: Clutter.ActorAlign.CENTER,
             });
             panelButton.set_child(panelButtonText);
