@@ -45,7 +45,7 @@ async function handle_request_dollar_api() {
             // Sext text in Widget
             panelButtonText = new St.Label({
             style_class : "cPanelText",
-                text: "(1 USD = " + dollarQuotation + " ILS)",
+                text: "$1 = ₪" + dollarQuotation,
                 y_align: Clutter.ActorAlign.CENTER,
             });
             panelButton.set_child(panelButtonText);
